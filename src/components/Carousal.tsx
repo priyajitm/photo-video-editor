@@ -28,40 +28,50 @@ const CardCarousel = ({
 
   const colors = ["blue", "green", "yellow", "purple"];
 
+  const showLeftArrow = currentIndex !== cards.length - 1;
+
   return (
     <motion.div className={styles.container}>
-      <motion.div
+      {showLeftArrow && <motion.div
         className={styles.arrowLeft}
         onClick={handlePrevClick}
         animate={{ x: inView ? maxLeftArrowRight : 0 }}
-        transition={{ duration: 0.4 }}
+        transition={inView ? { duration: 0.4 } : undefined}
       >
         L
-      </motion.div>
+      </motion.div>}
       <motion.div className={styles.carousel}>
         {reversedCards.map((card, index) => {
+          
           const isCenter = index === currentIndex;
-          const cardStyle = isCenter
-            ? {
-                transform: "translateX(0) translateZ(0)",
-                zIndex: reversedCards.length,
-                transition: "transform 0.2s ease-out",
-              }
-            : {
-                transform: `translateX(40%) translateZ(-200px)`,
-                scale: "0.8",
-                zIndex: 2,
-                transition: "transform 0.2s ease-out",
-              };
+
+          const cardsStyle = {
+            center: { x: 0, z: 0, },
+            side: { x: 100, z: -200, },
+            right: { x: maxCardRight, z: 0, },
+          };
 
           const color = colors[index % colors.length];
+          let cardPos;
+
+          if (inView) {
+            cardPos = "right";
+          } else {
+            cardPos = isCenter ? "center" : "side";
+          }
+
           return (
             <motion.div
               key={index}
               className={styles.card}
-              style={{ ...cardStyle, backgroundColor: color }}
-              animate={inView ? { x: maxCardRight } : { x: 0 }}
-              transition={{ duration: 0.1 }}
+              style={{
+                backgroundColor: color,
+                scale: isCenter ? "1" : "0.8",
+                zIndex: isCenter ? reversedCards.length + 1 : index + 1,
+              }}
+              variants={cardsStyle}
+              animate={cardPos}
+              transition={inView ? { duration: 0.4 } : undefined}
             >
               {card}
             </motion.div>
@@ -72,7 +82,7 @@ const CardCarousel = ({
         className={styles.arrowRight}
         onClick={handleNextClick}
         animate={inView ? { x: maxRightArrowRight } : { x: 0 }}
-        transition={{ duration: 0.2 }}
+        transition={inView ? { duration: 0.4 } : undefined}
       >
         R
       </motion.div>
