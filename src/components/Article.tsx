@@ -14,7 +14,7 @@ const Article = ({ reference, inView }: ArticleProps) => {
       animate={{ opacity: inView ? 1 : 0 }}
       transition={{
         type: "easeInOut",
-        duration: 0.8,
+        duration: 0.3,
       }}
     >
       <h1>Article Head</h1>

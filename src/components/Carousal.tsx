@@ -38,7 +38,7 @@ const CardCarousel = ({
         animate={{ x: inView ? maxLeftArrowRight : 0 }}
         transition={inView ? { duration: 0.4 } : undefined}
       >
-        L
+         &#60;
       </motion.div>}
       <motion.div className={styles.carousel}>
         {reversedCards.map((card, index) => {
@@ -84,7 +84,7 @@ const CardCarousel = ({
         animate={inView ? { x: maxRightArrowRight } : { x: 0 }}
         transition={inView ? { duration: 0.4 } : undefined}
       >
-        R
+         &#62;
       </motion.div>
     </motion.div>
   );

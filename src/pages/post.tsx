@@ -16,7 +16,7 @@ const Post = () => {
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
 
   const [ref, inView] = useInView({
-    threshold: 0.25,
+    threshold: 0.40,
     triggerOnce: false,
   });
 
@@ -35,7 +35,7 @@ const Post = () => {
   }, []);
 
   const maxCardRight = viewport.width / 2.5;
-  const maxLeftArrowRight = viewport.width - 800;
+  const maxLeftArrowRight = viewport.width - 845;
   const maxRightArrowRight = viewport.width / 2 - 500;
 
   return (
