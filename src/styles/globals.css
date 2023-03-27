@@ -20,7 +20,7 @@ a {
 .pintura-editor {
   --color-foreground: 255, 255, 255 !important;
   --color-background: 0, 0, 0 !important;
-  --editor-max-width: 300px;
-  --editor-max-height: 500px;
+  --editor-max-width: 500px;
+  --editor-max-height: 900px;
   --editor-modal-border-radius: 10px !important;
 }

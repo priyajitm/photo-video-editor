@@ -1,0 +1,11 @@
+.articleContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 100%;
+    height: 100%;
+    padding: 0 600px 0 200px;
+    color: white;
+    scroll-snap-align: center;
+}

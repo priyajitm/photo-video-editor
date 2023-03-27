@@ -91,6 +91,7 @@ const VideoEditor = ({
       imageCropMinSize={{ width: 300, height: 500 }}
       cropSelectPresetOptions={[["Size", [[[300, 500], "Profile"]]]]}
       willSetMediaInitialTimeOffset={() => 2}
+      imageCropLimitToImage={false}
       onLoad={hanldeEditorLoad}
       onProcess={handleEditorProcess}
     />

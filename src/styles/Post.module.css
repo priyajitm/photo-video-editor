@@ -1,31 +1,26 @@
 .container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
 }
 
 .wrapper {
-  width: 100%;
-  max-width: 800px;
-  max-height: 600px;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   transform-style: preserve-3d;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  position: fixed;
 }
 
 .cards {
-  position: relative;
+  position: fixed;
   width: 100%;
-  height: 100%;
-  margin-bottom: 20px;
 }
 
 .card {
@@ -34,9 +29,11 @@
   height: 500px;
   left: 0;
   right: 0;
+  top: 0;
+  bottom: 0;
   margin: auto;
   cursor: pointer;
-  transition: transform 0.4s ease;
+  /* transition: transform 0.4s ease; */
 }
 
 .cardImage {
@@ -44,4 +41,33 @@
   height: 100%;
   border-radius: 10px;
   object-fit: cover;
+}
+
+.btnWrapper {
+  position: fixed;
+  width: 60%;
+  height: 100px;
+}
+
+.btnWrapper button {
+  width: 38px;
+  height: 80px;
+  padding: 24px 12px;
+  position: absolute;
+}
+
+.btnR {
+  right: 100px;
+}
+
+.btnL {
+  left: 100px;
+}
+
+
+
+.main {
+  scroll-snap-type: y Proximity;
+  overflow: hidden;
+  min-height: 100vh;
 }

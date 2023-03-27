@@ -1,115 +1,55 @@
+import Article from "@/components/Article";
+import CardCarousel from "@/components/Carousal";
 import styles from "@/styles/Post.module.css";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
-export default function Post() {
-  const [positions, setPositions] = useState(["center", "right", "left"]);
-  const [positionIndex, setPositionIndex] = useState(0);
+const cards = [
+  <div key={1}>Card 1</div>,
+  <div key={2}>Card 2</div>,
+  <div key={3}>Card 3</div>,
+  <div key={4}>Card 4</div>,
+];
 
-  const handleClick = (e, position) => {
-    e.preventDefault();
+const Post = () => {
+  const [viewport, setViewport] = useState({ width: 0, height: 0 });
 
-    if (position === "left") {
-      setPositions(["center", "left", "right"]);
+  const [ref, inView] = useInView({
+    threshold: 0.25,
+    triggerOnce: false,
+  });
+
+  useEffect(() => {
+    function handleResize() {
+      setViewport({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
     }
 
-    if (position === "right") {
-      setPositions(["center", "right", "left"]);
-    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
 
-    setPositionIndex((positionIndex + 1) % positions.length);
-  };
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  const firstCardPosition = positions[(positionIndex + 2) % positions.length];
-  const secondCardPosition = positions[positionIndex % positions.length];
-  const thirdCardPosition = positions[(positionIndex + 1) % positions.length];
-
-  const card = {
-    left: {
-      x: -100,
-      scale: 0.8,
-      opacity: 0.4,
-      zIndex: 0,
-      transition: {
-        staggerChildren: 0.5,
-      },
-    },
-    center: {
-      x: 0,
-      scale: 1,
-      opacity: 1,
-      zIndex: 1,
-      transition: {
-        staggerChildren: 0.5,
-      },
-    },
-    right: {
-      x: 100,
-      scale: 0.8,
-      opacity: 0.4,
-      zIndex: 0,
-      transition: {
-        staggerChildren: 0.5,
-      },
-    },
-  };
+  const maxCardRight = viewport.width / 2.5;
+  const maxLeftArrowRight = viewport.width - 800;
+  const maxRightArrowRight = viewport.width / 2 - 500;
 
   return (
-    <div className={styles.container}>
-      <div className={styles.wrapper}>
-        <motion.div className={styles.cards}>
-          <motion.div
-            className={styles.card}
-            id="card-1"
-            variants={card}
-            animate={firstCardPosition}
-          >
-            <img
-              className={styles.cardImage}
-              src="https://images.unsplash.com/photo-1493612276216-ee3925520721?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80"
-              alt="card"
-            />
-          </motion.div>
-          <motion.div
-            className={styles.card}
-            id="card-2"
-            variants={card}
-            animate={secondCardPosition}
-          >
-            <img
-              className={styles.cardImage}
-              src="https://images.unsplash.com/photo-1574100004472-e536d3b6bacc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-              alt="card"
-            />
-          </motion.div>
-          <motion.div
-            className={styles.card}
-            id="card-3"
-            variants={card}
-            animate={thirdCardPosition}
-          >
-            <img
-              className={styles.cardImage}
-              src="https://images.unsplash.com/photo-1575318634028-6a0cfcb60c59?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=686&q=80"
-              alt="card"
-            />
-          </motion.div>
-        </motion.div>
-      </div>
-      <div style={{ alignSelf: "end" }}>
-        <button
-          style={{ alignSelf: "end" }}
-          onClick={(e) => handleClick(e, "left")}
-        >
-          Left
-        </button>
-        <button
-          style={{ alignSelf: "end" }}
-          onClick={(e) => handleClick(e, "right")}
-        >
-          Right
-        </button>
-      </div>
-    </div>
+    <motion.div className={styles.main}>
+      <CardCarousel
+        cards={cards}
+        inView={inView}
+        maxLeftArrowRight={maxLeftArrowRight}
+        maxRightArrowRight={maxRightArrowRight}
+        maxCardRight={maxCardRight}
+      />
+      <Article reference={ref} inView={inView} />
+    </motion.div>
   );
-}
+};
+
+export default Post;
